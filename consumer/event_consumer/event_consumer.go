@@ -1,4 +1,4 @@
-package eventconsumer
+package event_consumer
 
 import (
 	"log"
@@ -36,6 +36,11 @@ func (c Consumer) Start() error {
 			continue
 		}
 
+		if err := c.handleEvents(gotEvents); err != nil {
+			log.Print(err)
+			continue
+		}
+
 	}
 }
 
@@ -49,4 +54,5 @@ func (c *Consumer) handleEvents(events []events.Event) error {
 			continue
 		}
 	}
+	return nil
 }

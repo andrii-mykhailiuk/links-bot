@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -22,8 +23,8 @@ const (
 	sendMessageMethod = "sendMessage"
 )
 
-func New(host string, token string) Client {
-	return Client{
+func New(host string, token string) *Client {
+	return &Client{
 		host:     host,
 		basePath: newBasePath(token),
 		client:   http.Client{},
@@ -74,6 +75,7 @@ func (c *Client) doRequest(method string, query url.Values) (data []byte, err er
 		err = e.WrapIfErr("can't do a request", err)
 	}()
 
+	fmt.Print(c.host)
 	u := url.URL{
 		Scheme: "https",
 		Host:   c.host,
